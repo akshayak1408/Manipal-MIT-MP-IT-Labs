@@ -1,0 +1,29 @@
+DATA SEGMENT
+      ARRAY1 DW 19A3H,1234H,0F623H,1675H,3693H
+      ARRAY2 DW 3 DUP (?)
+DATA ENDS
+CODE SEGMENT
+      ASSUME CS:CODE,DS:DATA
+START:
+      MOV AX,DATA
+      MOV DS,AX
+
+      LEA SI,ARRAY1
+      ADD SI,08
+      LEA DI,ARRAY2
+      ADD DI,04
+      MOV CX,05
+BACK:
+      MOV DX,[SI]
+      MOV [DI],DX
+      DEC SI
+      DEC SI
+      DEC DI
+      DEC DI
+      LOOP BACK
+
+      MOV AH,4CH
+      INT 21H
+CODE ENDS
+END START
+      

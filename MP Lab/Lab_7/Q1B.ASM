@@ -1,0 +1,35 @@
+DATA SEGMENT
+        ARR DW 1111H,2222H,3333H,4444H,5555H,6666H,7777H,8888H,9999H,1234H
+        ELE DW 6666H
+        FOUND DB "ELEMENT FOUND!$" 
+        NOTFOUND DB "ELEMENT NOT FOUND!$"
+DATA ENDS
+
+CODE SEGMENT
+        ASSUME CS:CODE,DS:DATA
+START:
+        MOV AX,DATA
+        MOV DS,AX
+
+        MOV SI,0
+        MOV CX,10
+        MOV AX,ELE
+BACK:
+        CMP AX,WORD PTR ARR[SI]
+        JZ NEXT
+        INC SI
+        INC SI
+        LOOP BACK
+
+        LEA DX,NOTFOUND
+        JMP EXIT
+NEXT:
+        LEA DX,FOUND
+EXIT:
+        MOV AH,09H
+        INT 21H
+
+        MOV AH,4CH
+        INT 21H
+CODE ENDS
+END START
